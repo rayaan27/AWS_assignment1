@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UniEvent — GIK University Events</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-gik">GIK</span>
+        <span class="logo-uni">UniEvent</span>
+      </div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Events</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-tag">Ghulam Ishaq Khan Institute</p>
+      <h1>Discover<br><em>University</em><br>Events</h1>
+      <p class="hero-sub">Browse, explore and register for the latest events happening at GIK and beyond.</p>
+    </div>
+    <div class="hero-badge">LIVE</div>
+  </section>
+
+  <!-- EVENTS GRID -->
+  <main>
+    <div class="section-header">
+      <h2>Upcoming Events</h2>
+      <span class="powered">Powered by Ticketmaster API</span>
+    </div>
+
+    {% if events %}
+    <div class="events-grid">
+      {% for event in events %}
+      <div class="event-card">
+        {% if event.image %}
+        <div class="card-img">
+          <img src="{{ event.image }}" alt="{{ event.title }}" loading="lazy"/>
+          <div class="card-img-overlay"></div>
+        </div>
+        {% else %}
+        <div class="card-img no-img">
+          <span>No Image</span>
+        </div>
+        {% endif %}
+        <div class="card-body">
+          <div class="card-date">📅 {{ event.date }}</div>
+          <h3 class="card-title">{{ event.title }}</h3>
+          <div class="card-venue">📍 {{ event.venue }}{% if event.city %}, {{ event.city }}{% endif %}</div>
+          <p class="card-desc">{{ event.description[:120] }}{% if event.description|length > 120 %}...{% endif %}</p>
+          <a href="{{ event.url }}" target="_blank" class="card-btn">View Event →</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-events">
+      <p>⚠️ Could not load events. Check your Ticketmaster API key in <code>app.py</code></p>
+    </div>
+    {% endif %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>CE 308/408 Cloud Computing — Assignment 1 &nbsp;|&nbsp; GIK Institute &nbsp;|&nbsp; Deployed on AWS</p>
+    <p class="footer-stack">EC2 &nbsp;·&nbsp; S3 &nbsp;·&nbsp; VPC &nbsp;·&nbsp; ALB &nbsp;·&nbsp; IAM</p>
+  </footer>
+
+</body>
+</html>
 
